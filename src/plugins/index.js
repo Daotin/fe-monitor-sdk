@@ -6,6 +6,15 @@
 // 导入错误监控插件
 import { JSErrorPlugin, ResourceErrorPlugin, HttpErrorPlugin, FrameworkErrorPlugin } from './error/index.js';
 
+// 导入性能监控插件
+import {
+  PageLoadPlugin,
+  ResourceLoadPlugin,
+  FirstPaintPlugin,
+  FirstContentfulPaintPlugin,
+  LargestContentfulPaintPlugin,
+} from './performance/index.js';
+
 // 插件注册表对象
 const PluginRegistry = {
   // 错误监控插件
@@ -13,6 +22,13 @@ const PluginRegistry = {
   resourceError: ResourceErrorPlugin,
   httpError: HttpErrorPlugin,
   frameworkError: FrameworkErrorPlugin,
+
+  // 性能监控插件
+  pageLoad: PageLoadPlugin,
+  resourceLoad: ResourceLoadPlugin,
+  firstPaint: FirstPaintPlugin,
+  firstContentfulPaint: FirstContentfulPaintPlugin,
+  largestContentfulPaint: LargestContentfulPaintPlugin,
 
   // 其他插件将在这里添加
 };
