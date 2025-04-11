@@ -17,12 +17,15 @@ const monitor = new Monitor({
     // 性能监控插件
     // 'pageLoad',
     // 'resourceLoad',
-    'firstPaint',
+    // 'firstPaint',
     // 'firstContentfulPaint',
     // 'largestContentfulPaint',
+    // 'firstScreen', // 首屏加载时间计算
+    // 'whiteScreen', // 白屏检测
+    'longTask', // 长任务监控
   ],
   sampling: 1, // 100% 采样
-  maxQueueSize: 3,
+  maxQueueSize: 10,
 });
 
 // 初始化监控
@@ -59,19 +62,49 @@ function reportCustomPerformanceMetric() {
   console.log(`自定义性能指标已上报，耗时: ${duration.toFixed(2)}ms`);
 }
 
-// 添加按钮来触发自定义性能指标上报
-function addReportButton() {
-  const button = document.createElement('button');
-  button.textContent = '上报自定义性能指标';
-  button.addEventListener('click', reportCustomPerformanceMetric);
-  document.body.appendChild(button);
+// 示例：触发长任务
+function triggerLongTask() {
+  console.log('即将触发长任务...');
+
+  // 模拟一个长任务（超过 50ms 的任务）
+  const startTime = performance.now();
+
+  // 执行一个耗时操作，阻塞主线程
+  const blockTime = 100; // 阻塞 100ms
+  const endTime = startTime + blockTime;
+
+  // 使用循环来阻塞主线程
+  while (performance.now() < endTime) {
+    // 空循环，消耗CPU
+  }
+
+  const actualDuration = performance.now() - startTime;
+  console.log(`长任务已触发，实际耗时: ${actualDuration.toFixed(2)}ms`);
+
+  // 长任务将由 LongTaskPlugin 自动捕获和上报
+}
+
+// 添加按钮来触发自定义性能指标上报和长任务
+function addButtons() {
+  // 添加自定义性能指标按钮
+  const reportButton = document.createElement('button');
+  reportButton.textContent = '上报自定义性能指标';
+  reportButton.addEventListener('click', reportCustomPerformanceMetric);
+  reportButton.style.marginRight = '10px';
+  document.body.appendChild(reportButton);
+
+  // 添加触发长任务按钮
+  const longTaskButton = document.createElement('button');
+  longTaskButton.textContent = '触发长任务';
+  longTaskButton.addEventListener('click', triggerLongTask);
+  document.body.appendChild(longTaskButton);
 }
 
 // 当 DOM 加载完成后添加按钮
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', addReportButton);
+  document.addEventListener('DOMContentLoaded', addButtons);
 } else {
-  addReportButton();
+  addButtons();
 }
 
 // 导出 monitor 实例，以便可以在控制台中访问

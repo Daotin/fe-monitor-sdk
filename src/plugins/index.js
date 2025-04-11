@@ -13,6 +13,9 @@ import {
   FirstPaintPlugin,
   FirstContentfulPaintPlugin,
   LargestContentfulPaintPlugin,
+  FirstScreenPlugin,
+  WhiteScreenPlugin,
+  LongTaskPlugin,
 } from './performance/index.js';
 
 // 插件注册表对象
@@ -29,6 +32,9 @@ const PluginRegistry = {
   firstPaint: FirstPaintPlugin,
   firstContentfulPaint: FirstContentfulPaintPlugin,
   largestContentfulPaint: LargestContentfulPaintPlugin,
+  firstScreen: FirstScreenPlugin,
+  whiteScreen: WhiteScreenPlugin,
+  longTask: LongTaskPlugin,
 
   // 其他插件将在这里添加
 };
