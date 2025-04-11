@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>前端监控 SDK - 错误监控示例</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      button {
+        margin: 10px;
+        padding: 8px 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .console {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        height: 300px;
+        overflow-y: auto;
+        position: relative;
+      }
+      .log {
+        margin: 5px 0;
+        padding: 5px;
+        border-bottom: 1px solid #eee;
+      }
+      .error {
+        color: red;
+      }
+      .warning {
+        color: orange;
+      }
+      .info {
+        color: blue;
+      }
+      .clear-console {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 5px;
+        margin: 0;
+      }
+      .clear-console:hover {
+        background: none;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>前端监控 SDK - 错误监控示例</h1>
+    <p>这个示例展示了如何使用前端监控 SDK 的错误监控功能。点击下面的按钮触发不同类型的错误，然后查看控制台输出。</p>
+
+    <div>
+      <button id="js-error-btn">触发 JS 错误</button>
+      <button id="promise-error-btn">触发 Promise 错误</button>
+      <button id="resource-error-btn">触发资源错误</button>
+      <button id="http-error-btn">触发 HTTP 错误</button>
+    </div>
+
+    <h2>控制台输出</h2>
+    <div class="console" id="console-output">
+      <button class="clear-console" id="clear-console-btn" title="清空控制台">🗑️</button>
+    </div>
+
+    <script src="log.js"></script>
+
+    <!-- 使用 ES 模块导入示例脚本 -->
+    <!-- 注意：在实际使用中，你需要使用构建工具如 webpack 或 rollup -->
+    <script type="module" src="error-monitoring.js"></script>
+  </body>
+</html>
