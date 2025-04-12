@@ -19,7 +19,14 @@ import {
 } from './performance/index.js'
 
 // 导入用户行为监控插件
-import { ClickPlugin, PageChangePlugin, PVPlugin, UVPlugin } from './behavior/index.js'
+import {
+	ClickPlugin,
+	PageChangePlugin,
+	PVPlugin,
+	UVPlugin,
+	RRWebPlugin,
+	BehaviorStackPlugin,
+} from './behavior/index.js'
 
 // 插件注册表对象
 const PluginRegistry = {
@@ -44,6 +51,8 @@ const PluginRegistry = {
 	pageChange: PageChangePlugin,
 	pv: PVPlugin,
 	uv: UVPlugin,
+	rrweb: RRWebPlugin,
+	behaviorStack: BehaviorStackPlugin,
 
 	// 其他插件将在这里添加
 }
@@ -85,9 +94,12 @@ export function initPlugins(monitor) {
 				// 创建插件实例
 				const plugin = new PluginConstructor(monitor)
 
-				// 初始化插件
+				// 获取插件配置
+				const pluginConfig = monitor.config.pluginsConfig && monitor.config.pluginsConfig[pluginName]
+
+				// 初始化插件，传入插件配置
 				if (typeof plugin.init === 'function') {
-					plugin.init()
+					plugin.init(pluginConfig)
 				}
 
 				// 保存插件实例
