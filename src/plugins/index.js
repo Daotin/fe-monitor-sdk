@@ -4,40 +4,49 @@
  */
 
 // 导入错误监控插件
-import { JSErrorPlugin, ResourceErrorPlugin, HttpErrorPlugin, FrameworkErrorPlugin } from './error/index.js';
+import { JSErrorPlugin, ResourceErrorPlugin, HttpErrorPlugin, FrameworkErrorPlugin } from './error/index.js'
 
 // 导入性能监控插件
 import {
-  PageLoadPlugin,
-  ResourceLoadPlugin,
-  FirstPaintPlugin,
-  FirstContentfulPaintPlugin,
-  LargestContentfulPaintPlugin,
-  FirstScreenPlugin,
-  WhiteScreenPlugin,
-  LongTaskPlugin,
-} from './performance/index.js';
+	PageLoadPlugin,
+	ResourceLoadPlugin,
+	FirstPaintPlugin,
+	FirstContentfulPaintPlugin,
+	LargestContentfulPaintPlugin,
+	FirstScreenPlugin,
+	WhiteScreenPlugin,
+	LongTaskPlugin,
+} from './performance/index.js'
+
+// 导入用户行为监控插件
+import { ClickPlugin, PageChangePlugin, PVPlugin, UVPlugin } from './behavior/index.js'
 
 // 插件注册表对象
 const PluginRegistry = {
-  // 错误监控插件
-  jsError: JSErrorPlugin,
-  resourceError: ResourceErrorPlugin,
-  httpError: HttpErrorPlugin,
-  frameworkError: FrameworkErrorPlugin,
+	// 错误监控插件
+	jsError: JSErrorPlugin,
+	resourceError: ResourceErrorPlugin,
+	httpError: HttpErrorPlugin,
+	frameworkError: FrameworkErrorPlugin,
 
-  // 性能监控插件
-  pageLoad: PageLoadPlugin,
-  resourceLoad: ResourceLoadPlugin,
-  firstPaint: FirstPaintPlugin,
-  firstContentfulPaint: FirstContentfulPaintPlugin,
-  largestContentfulPaint: LargestContentfulPaintPlugin,
-  firstScreen: FirstScreenPlugin,
-  whiteScreen: WhiteScreenPlugin,
-  longTask: LongTaskPlugin,
+	// 性能监控插件
+	pageLoad: PageLoadPlugin,
+	resourceLoad: ResourceLoadPlugin,
+	firstPaint: FirstPaintPlugin,
+	firstContentfulPaint: FirstContentfulPaintPlugin,
+	largestContentfulPaint: LargestContentfulPaintPlugin,
+	firstScreen: FirstScreenPlugin,
+	whiteScreen: WhiteScreenPlugin,
+	longTask: LongTaskPlugin,
 
-  // 其他插件将在这里添加
-};
+	// 用户行为监控插件
+	click: ClickPlugin,
+	pageChange: PageChangePlugin,
+	pv: PVPlugin,
+	uv: UVPlugin,
+
+	// 其他插件将在这里添加
+}
 
 /**
  * 根据名称获取插件构造函数
@@ -45,7 +54,7 @@ const PluginRegistry = {
  * @returns {Function|undefined} - 插件构造函数，如果未找到则返回 undefined
  */
 export function getPlugin(name) {
-  return PluginRegistry[name];
+	return PluginRegistry[name]
 }
 
 /**
@@ -53,7 +62,7 @@ export function getPlugin(name) {
  * @returns {Object} - 包含所有已注册插件的对象
  */
 export function getAllPlugins() {
-  return { ...PluginRegistry };
+	return { ...PluginRegistry }
 }
 
 /**
@@ -62,36 +71,36 @@ export function getAllPlugins() {
  * @returns {Object} - 包含所有已初始化插件实例的对象
  */
 export function initPlugins(monitor) {
-  const plugins = {};
+	const plugins = {}
 
-  // 获取配置中启用的插件
-  const enabledPlugins = monitor.config.plugins || [];
+	// 获取配置中启用的插件
+	const enabledPlugins = monitor.config.plugins || []
 
-  // 初始化每个启用的插件
-  enabledPlugins.forEach((pluginName) => {
-    const PluginConstructor = PluginRegistry[pluginName];
+	// 初始化每个启用的插件
+	enabledPlugins.forEach(pluginName => {
+		const PluginConstructor = PluginRegistry[pluginName]
 
-    if (PluginConstructor) {
-      try {
-        // 创建插件实例
-        const plugin = new PluginConstructor(monitor);
+		if (PluginConstructor) {
+			try {
+				// 创建插件实例
+				const plugin = new PluginConstructor(monitor)
 
-        // 初始化插件
-        if (typeof plugin.init === 'function') {
-          plugin.init();
-        }
+				// 初始化插件
+				if (typeof plugin.init === 'function') {
+					plugin.init()
+				}
 
-        // 保存插件实例
-        plugins[pluginName] = plugin;
-      } catch (error) {
-        console.error(`初始化插件 ${pluginName} 失败:`, error);
-      }
-    } else {
-      console.warn(`未找到插件: ${pluginName}`);
-    }
-  });
+				// 保存插件实例
+				plugins[pluginName] = plugin
+			} catch (error) {
+				console.error(`初始化插件 ${pluginName} 失败:`, error)
+			}
+		} else {
+			console.warn(`未找到插件: ${pluginName}`)
+		}
+	})
 
-  return plugins;
+	return plugins
 }
 
-export default PluginRegistry;
+export default PluginRegistry

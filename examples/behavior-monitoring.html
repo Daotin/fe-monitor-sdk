@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>用户行为监控示例</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+			h1 {
+				color: #333;
+			}
+			.container {
+				border: 1px solid #ddd;
+				padding: 20px;
+				margin-top: 20px;
+				border-radius: 5px;
+			}
+			button {
+				background-color: #4caf50;
+				color: white;
+				padding: 10px 15px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				margin-right: 10px;
+				margin-bottom: 10px;
+			}
+			button:hover {
+				background-color: #45a049;
+			}
+			.monitor-ignore {
+				background-color: #f44336;
+			}
+			.monitor-ignore:hover {
+				background-color: #d32f2f;
+			}
+			.navigation {
+				margin-top: 20px;
+			}
+			.navigation a {
+				margin-right: 15px;
+				color: #2196f3;
+				text-decoration: none;
+			}
+			.form-group {
+				margin-bottom: 15px;
+			}
+			label {
+				display: block;
+				margin-bottom: 5px;
+			}
+			input,
+			textarea {
+				width: 100%;
+				padding: 8px;
+				box-sizing: border-box;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+			}
+			.log-container {
+				background-color: #f5f5f5;
+				padding: 10px;
+				border-radius: 4px;
+				margin-top: 20px;
+				height: 200px;
+				overflow-y: auto;
+				font-family: monospace;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>用户行为监控示例</h1>
+
+		<div class="container">
+			<h2>点击行为测试</h2>
+			<p>点击下面的按钮，测试点击行为收集功能：</p>
+
+			<button id="normal-button">普通按钮</button>
+			<button id="data-button" data-test="test-data">带数据属性的按钮</button>
+			<button class="monitor-ignore">被忽略的按钮</button>
+			<button data-monitor-ignore>被忽略的按钮 (属性)</button>
+
+			<div class="form-group">
+				<label for="test-input">测试输入框：</label>
+				<input type="text" id="test-input" placeholder="在此输入文本" />
+			</div>
+
+			<div class="form-group">
+				<label for="test-password">密码输入框：</label>
+				<input type="password" id="test-password" placeholder="在此输入密码" />
+			</div>
+
+			<div class="form-group">
+				<label for="test-textarea">测试文本区域：</label>
+				<textarea id="test-textarea" placeholder="在此输入多行文本"></textarea>
+			</div>
+		</div>
+
+		<div class="container">
+			<h2>页面跳转测试</h2>
+			<p>点击下面的链接，测试页面跳转收集功能：</p>
+
+			<div class="navigation">
+				<a href="#home">首页</a>
+				<a href="#about">关于我们</a>
+				<a href="#services">服务</a>
+				<a href="#contact">联系我们</a>
+			</div>
+
+			<div style="margin-top: 15px">
+				<button id="push-state">使用 pushState</button>
+				<button id="replace-state">使用 replaceState</button>
+				<button id="go-back">后退</button>
+			</div>
+		</div>
+
+		<div class="container">
+			<h2>控制台输出</h2>
+			<div class="console" id="console-output">
+				<button class="clear-console" id="clear-console-btn" title="清空控制台">🗑️</button>
+				<button id="flush-queue" style="margin-top: 10px">手动发送数据</button>
+			</div>
+		</div>
+
+		<!-- 使用 ES 模块导入 -->
+		<script type="module" src="behavior-monitoring.js"></script>
+
+		<script src="log.js"></script>
+
+		<script type="module">
+			// 添加页面跳转按钮事件
+			document.getElementById('push-state').addEventListener('click', () => {
+				history.pushState({}, 'Push State Page', '/push-state-page')
+				console.log('已使用 pushState 跳转到 /push-state-page')
+			})
+
+			document.getElementById('replace-state').addEventListener('click', () => {
+				history.replaceState({}, 'Replace State Page', '/replace-state-page')
+				console.log('已使用 replaceState 跳转到 /replace-state-page')
+			})
+
+			document.getElementById('go-back').addEventListener('click', () => {
+				history.back()
+				console.log('已触发后退操作')
+			})
+		</script>
+	</body>
+</html>
