@@ -30,13 +30,13 @@
 ## 安装
 
 ```bash
-npm install fe-monitor-sdk
+npm install dt-monitor-sdk
 ```
 
 或使用 yarn：
 
 ```bash
-yarn add fe-monitor-sdk
+yarn add dt-monitor-sdk
 ```
 
 ## 基本用法
@@ -44,7 +44,7 @@ yarn add fe-monitor-sdk
 ### ES Module 方式
 
 ```javascript
-import Monitor from 'fe-monitor-sdk'
+import Monitor from 'dt-monitor-sdk'
 
 const monitor = new Monitor({
 	appId: 'your-app-id',
@@ -91,12 +91,26 @@ monitor.setUser('user-123', {
 })
 ```
 
-### Script 标签方式 (UMD)
+### UMD 方式
+
+```javascript
+// main.js
+const { Monitor } = require('dt-monitor-sdk')
+
+const monitor = new Monitor({
+	appId: 'your-app-id',
+	reportUrl: '/api/report',
+})
+console.log('使用UMD格式初始化监控')
+monitor.init()
+```
+
+### Script 标签方式 (IIFE)
 
 ```html
-<script src="https://cdn.example.com/fe-monitor-sdk.min.js"></script>
+<script src="https://cdn.example.com/dt-monitor-sdk.iife.min.js"></script>
 <script>
-	var monitor = new MonitorSDK({
+	var monitor = new MonitorSDK.Monitor({
 		appId: 'your-app-id',
 		reportUrl: 'https://your-server.com/report',
 		plugins: ['jsError', 'pv', 'rrweb'],
@@ -231,7 +245,7 @@ pluginsConfig: {
 ### 错误监控示例
 
 ```javascript
-import Monitor from 'fe-monitor-sdk'
+import Monitor from 'dt-monitor-sdk'
 
 // 创建一个新的 Monitor 实例，启用错误监控插件
 const monitor = new Monitor({
@@ -263,7 +277,7 @@ function triggerJSError() {
 ### 性能监控示例
 
 ```javascript
-import Monitor from 'fe-monitor-sdk'
+import Monitor from 'dt-monitor-sdk'
 
 // 创建一个新的 Monitor 实例，启用性能监控插件
 const monitor = new Monitor({
@@ -292,7 +306,7 @@ monitor.on('performance', data => {
 ### 自定义事件监听
 
 ```javascript
-import Monitor from 'fe-monitor-sdk'
+import Monitor from 'dt-monitor-sdk'
 
 const monitor = new Monitor({
 	appId: 'example-app',
@@ -322,7 +336,7 @@ monitor.on('error:jsError', jsErrorData => {
 ## 项目结构
 
 ```
-fe-monitor-sdk/
+dt-monitor-sdk/
 ├── src/                  # 源代码目录
 │   ├── core/             # 核心功能
 │   │   ├── monitor.js    # Monitor 核心类

@@ -24,7 +24,7 @@ import {
 	PageChangePlugin,
 	PVPlugin,
 	UVPlugin,
-	RRWebPlugin,
+	// RRWebPlugin,
 	BehaviorStackPlugin,
 } from './behavior/index.js'
 
@@ -51,7 +51,7 @@ const PluginRegistry = {
 	pageChange: PageChangePlugin,
 	pv: PVPlugin,
 	uv: UVPlugin,
-	rrweb: RRWebPlugin,
+	// rrweb: RRWebPlugin,
 	behaviorStack: BehaviorStackPlugin,
 
 	// 其他插件将在这里添加

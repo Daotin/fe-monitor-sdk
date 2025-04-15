@@ -1,6 +1,6 @@
 {
-	"name": "fe-monitor-sdk",
-	"version": "0.1.0",
+	"name": "dt-monitor-sdk",
+	"version": "0.0.1",
 	"description": "Frontend monitoring SDK",
 	"type": "module",
 	"main": "dist/index.umd.js",
@@ -11,7 +11,9 @@
 	],
 	"scripts": {
 		"build": "rollup -c",
-		"dev": "rollup -c -w"
+		"dev": "rollup -c -w",
+		"prepublishOnly": "npm run build",
+		"release": "npm run build && npm publish"
 	},
 	"keywords": [
 		"monitoring",

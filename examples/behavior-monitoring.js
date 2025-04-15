@@ -5,7 +5,7 @@
 
 // 导入 Monitor 类
 // 在实际项目中，你会使用：
-// import Monitor from 'fe-monitor-sdk';
+// import Monitor from 'dt-monitor-sdk';
 // 这里我们使用相对路径导入
 import Monitor from '../src/index.js'
 
