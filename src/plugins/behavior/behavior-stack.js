@@ -69,7 +69,7 @@ class BehaviorStackPlugin {
 			return
 		}
 
-		console.log('on监听事件')
+		console.log('handleBehavior--on监听事件')
 
 		// 对某些高频事件进行防抖处理
 		if (data.type === 'scroll' || data.type === 'mousemove') {
@@ -166,7 +166,6 @@ class BehaviorStackPlugin {
 	 * @param {Object} errorData - 错误数据
 	 */
 	handleError(errorData) {
-		console.log('⭐errorData==>', errorData)
 		if (this.options.reportWithError && this.stack.length > 0) {
 			this.reportBehaviorStack(errorData)
 		}
@@ -177,6 +176,9 @@ class BehaviorStackPlugin {
 	 * @param {Object} errorData - 关联的错误数据(可选)
 	 */
 	reportBehaviorStack(errorData = null) {
+		// 如果提供了错误数据，先记录错误
+		this.recordBehavior(errorData)
+
 		if (this.stack.length === 0) {
 			return
 		}

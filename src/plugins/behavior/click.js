@@ -26,6 +26,7 @@ class ClickPlugin {
 	 * @param {Event} event - 点击事件对象
 	 */
 	handleClick = event => {
+		console.log('触发点击事件', event)
 		const target = event.target
 
 		// 如果目标元素带有忽略类，则不收集

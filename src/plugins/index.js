@@ -24,7 +24,7 @@ import {
 	PageChangePlugin,
 	PVPlugin,
 	UVPlugin,
-	// RRWebPlugin,
+	RRWebPlugin,
 	BehaviorStackPlugin,
 } from './behavior/index.js'
 
@@ -51,7 +51,7 @@ const PluginRegistry = {
 	pageChange: PageChangePlugin,
 	pv: PVPlugin,
 	uv: UVPlugin,
-	// rrweb: RRWebPlugin,
+	rrweb: RRWebPlugin,
 	behaviorStack: BehaviorStackPlugin,
 
 	// 其他插件将在这里添加
@@ -99,6 +99,7 @@ export function initPlugins(monitor) {
 
 				// 初始化插件，传入插件配置
 				if (typeof plugin.init === 'function') {
+					console.log('initPlugins', pluginConfig)
 					plugin.init(pluginConfig)
 				}
 

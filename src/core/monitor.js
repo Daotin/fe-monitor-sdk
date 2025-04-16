@@ -1,7 +1,6 @@
 /**
  * 监控 SDK 的核心 Monitor 类
  */
-
 import DataReporter from '../transport/index.js'
 import {
 	isObject,
@@ -149,7 +148,7 @@ class Monitor {
 		// 添加到队列
 		this.queue.push(reportData)
 
-		console.log('捕获数据已入队:', this.queue.length, reportData.type, reportData.subType)
+		console.log('捕获数据已入队:', this.queue.length, reportData.type, reportData.subType, reportData)
 
 		// 触发相应类型的事件
 		if (reportData.type) {
@@ -167,6 +166,13 @@ class Monitor {
 		}
 
 		return true
+	}
+
+	/**
+	 * 获取当前队列中的数据
+	 */
+	getQueue() {
+		return this.queue
 	}
 
 	/**

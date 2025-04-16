@@ -209,7 +209,7 @@ class RRWebPlugin {
 	 */
 	reportRecording(errorData) {
 		const recordingData = {
-			type: 'recording',
+			type: 'behavior',
 			subType: 'rrweb',
 			recordingId: generateUniqueId(),
 			errorId: errorData.id || generateUniqueId(),
