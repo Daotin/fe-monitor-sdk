@@ -1,6 +1,6 @@
 {
 	"name": "dt-monitor-sdk",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Frontend monitoring SDK",
 	"type": "module",
 	"main": "dist/index.umd.js",
