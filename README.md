@@ -142,6 +142,22 @@ monitor.init()
 
 ### 插件配置
 
+#### 框架错误插件配置
+
+```javascript
+// vue3
+frameworkError: {
+  Vue: app,
+  version: 3,
+}
+
+// vue2
+frameworkError: {
+  Vue: Vue,
+  version: 2,
+}
+```
+
 #### rrweb 录屏插件配置
 
 ```javascript
@@ -186,6 +202,7 @@ pluginsConfig: {
 - `monitor.on(eventType, listener)` - 监听特定类型的事件
 - `monitor.off(eventType, listener)` - 移除事件监听器
 - `monitor.flushQueue()` - 立即发送队列中的数据
+- `monitor.getQueue()` - 获取当前队列中的数据
 - `monitor.destroy()` - 清理并销毁监控实例
 
 ### 事件类型
@@ -240,99 +257,6 @@ pluginsConfig: {
 }
 ```
 
-## 更多使用示例
-
-### 错误监控示例
-
-```javascript
-import Monitor from 'dt-monitor-sdk'
-
-// 创建一个新的 Monitor 实例，启用错误监控插件
-const monitor = new Monitor({
-	appId: 'example-app',
-	reportUrl: 'https://example.com/api/monitor',
-	plugins: ['jsError', 'resourceError', 'httpError'], // 启用错误监控插件
-	sampling: 1, // 100% 采样
-})
-
-// 初始化监控
-monitor.init()
-
-// 示例: 手动触发 JS 错误
-function triggerJSError() {
-	try {
-		// 故意引发错误
-		const obj = null
-		obj.nonExistentMethod()
-	} catch (error) {
-		// 错误会被 jsError 插件自动捕获，也可以手动上报
-		monitor.reportError(error, {
-			context: '手动触发的错误',
-			importance: 'high',
-		})
-	}
-}
-```
-
-### 性能监控示例
-
-```javascript
-import Monitor from 'dt-monitor-sdk'
-
-// 创建一个新的 Monitor 实例，启用性能监控插件
-const monitor = new Monitor({
-	appId: 'example-app',
-	reportUrl: 'https://example.com/api/monitor',
-	plugins: [
-		'pageLoad',
-		'resourceLoad',
-		'firstPaint',
-		'firstContentfulPaint',
-		'largestContentfulPaint',
-		'firstScreen',
-		'longTask',
-	],
-})
-
-// 初始化监控
-monitor.init()
-
-// 监听性能事件
-monitor.on('performance', data => {
-	console.log('捕获到性能数据:', data)
-})
-```
-
-### 自定义事件监听
-
-```javascript
-import Monitor from 'dt-monitor-sdk'
-
-const monitor = new Monitor({
-	appId: 'example-app',
-	reportUrl: 'https://example.com/api/monitor',
-	plugins: ['jsError', 'rrweb', 'behaviorStack'],
-})
-
-monitor.init()
-
-// 监听错误事件
-monitor.on('error', errorData => {
-	console.log('捕获到错误:', errorData)
-	// 可以在这里执行自定义逻辑
-})
-
-// 监听行为事件
-monitor.on('behavior', behaviorData => {
-	console.log('捕获到用户行为:', behaviorData)
-})
-
-// 监听特定子类型的事件
-monitor.on('error:jsError', jsErrorData => {
-	console.log('捕获到 JS 错误:', jsErrorData)
-})
-```
-
 ## 项目结构
 
 ```
@@ -365,7 +289,7 @@ dt-monitor-sdk/
 npm install
 
 # 构建 SDK
-npm run build
+npm run build-only
 ```
 
 构建后的文件将输出到 `dist` 目录，包含以下格式：
